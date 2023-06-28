@@ -70,8 +70,6 @@ class _TodoPageState extends State<TodoPage> {
             ),
           ),
           SlideBottomSheet(
-            formatTime: formatTime,
-            formatDate: formatDate,
             setDate: (date) {
               setState(() {
                 formatDate = DateFormat('dd MMMM yyyy').format(date.value);

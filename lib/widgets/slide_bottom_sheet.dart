@@ -1,21 +1,18 @@
 import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
 import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 // ignore: must_be_immutable
 class SlideBottomSheet extends StatefulWidget {
-  String? formatDate;
-  String? formatTime;
   final Function(DateRangePickerSelectionChangedArgs date) setDate;
   final Function(Time time) setTime;
   final VoidCallback onCreateTask;
   final Function(String title) onTextChange;
-  SlideBottomSheet({
+  const SlideBottomSheet({
     super.key,
-    required this.formatDate,
-    required this.formatTime,
     required this.setDate,
     required this.setTime,
     required this.onCreateTask,
@@ -28,6 +25,8 @@ class SlideBottomSheet extends StatefulWidget {
 
 class _SlideBottomSheetState extends State<SlideBottomSheet> {
   final titleTextController = TextEditingController();
+  String? formatTime;
+  String? formatDate;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -93,7 +92,12 @@ class _SlideBottomSheetState extends State<SlideBottomSheet> {
                                 hour: DateTime.now().hour,
                                 minute: DateTime.now().minute,
                                 second: DateTime.now().second),
-                            onChange: widget.setTime,
+                            onChange: (time) {
+                              widget.setTime.call(time);
+                              setState(() {
+                                formatTime = time.format(context);
+                              });
+                            },
                           ),
                         );
                       },
@@ -102,9 +106,9 @@ class _SlideBottomSheetState extends State<SlideBottomSheet> {
                         color: Colors.black,
                       ),
                     ),
-                    widget.formatTime == null || widget.formatTime!.isEmpty
+                    formatTime == null || formatTime!.isEmpty
                         ? const SizedBox()
-                        : Text(widget.formatTime!),
+                        : Text(formatTime!),
                     IconButton(
                       onPressed: () {
                         showDialog(
@@ -154,7 +158,16 @@ class _SlideBottomSheetState extends State<SlideBottomSheet> {
                                             selectionMode:
                                                 DateRangePickerSelectionMode
                                                     .single,
-                                            onSelectionChanged: widget.setDate,
+                                            onSelectionChanged: (date) {
+                                              widget.setDate.call(date);
+                                              setState(
+                                                () {
+                                                  formatDate =
+                                                      DateFormat('dd MMMM yyyy')
+                                                          .format(date.value);
+                                                },
+                                              );
+                                            },
                                           ),
                                         ),
                                       ),
@@ -168,9 +181,7 @@ class _SlideBottomSheetState extends State<SlideBottomSheet> {
                       },
                       icon: const Icon(Icons.calendar_month),
                     ),
-                    widget.formatDate == null
-                        ? const SizedBox()
-                        : Text(widget.formatDate!)
+                    formatDate == null ? const SizedBox() : Text(formatDate!)
                   ],
                 ),
               ),
@@ -181,8 +192,8 @@ class _SlideBottomSheetState extends State<SlideBottomSheet> {
                     widget.onCreateTask.call();
                     setState(() {
                       titleTextController.clear();
-                      widget.formatDate = '';
-                      widget.formatTime = '';
+                      formatDate = '';
+                      formatTime = '';
                     });
                   },
                   style:
