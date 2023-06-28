@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/pages/home/completed_task_page.dart';
 import 'package:todo_app/widgets/slide_bottom_sheet.dart';
+import 'package:todo_app/widgets/task_box.dart';
 
 class TodoPage extends StatefulWidget {
   const TodoPage({super.key});
@@ -50,45 +51,18 @@ class _TodoPageState extends State<TodoPage> {
                       return element.isDone == false;
                     },
                   ).map(
-                    (task) => Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: Material(
-                        elevation: 3,
-                        borderRadius: BorderRadius.circular(10),
-                        child: ListTile(
-                          leading: Checkbox(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                5,
-                              ),
-                            ),
-                            value: task.isDone,
-                            activeColor: Colors.green,
-                            checkColor: Colors.white,
-                            onChanged: (value) {
-                              setState(() {
-                                task.isDone = value!;
-                              });
-                            },
-                          ),
-                          title: Text(task.title),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Text(task.taskDateTime),
-                          ),
-                          trailing: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                TaskModel.myTaskList.remove(task);
-                              });
-                            },
-                            icon: const Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
-                      ),
+                    (task) => TaskBox(
+                      task: task,
+                      onCheckDone: (value) {
+                        setState(() {
+                          task.isDone = value!;
+                        });
+                      },
+                      onDelete: () {
+                        setState(() {
+                          TaskModel.myTaskList.remove(task);
+                        });
+                      },
                     ),
                   ),
                 ],
