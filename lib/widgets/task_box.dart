@@ -30,15 +30,15 @@ class _TaskBoxState extends State<TaskBox> {
                 5,
               ),
             ),
-            value: widget.task.isDone,
+            value: false,
             activeColor: Colors.green,
             checkColor: Colors.white,
             onChanged: widget.onCheckDone,
           ),
-          title: Text(widget.task.title),
+          title: Text(''),
           subtitle: Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: Text(widget.task.taskDateTime),
+            child: Text(''),
           ),
           trailing: IconButton(
             onPressed: widget.onDelete,
