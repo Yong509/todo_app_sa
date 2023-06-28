@@ -28,8 +28,6 @@ class _TodoPageState extends State<TodoPage> {
             ),
           ),
           SlideBottomSheet(
-            formatTime: formatTime,
-            formatDate: formatDate,
             setDate: (date) {},
             setTime: (time) {},
             onTextChange: (title) {},
