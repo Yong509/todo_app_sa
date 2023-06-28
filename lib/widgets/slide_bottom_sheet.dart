@@ -1,6 +1,7 @@
 import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
 import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -91,7 +92,12 @@ class _SlideBottomSheetState extends State<SlideBottomSheet> {
                                 hour: DateTime.now().hour,
                                 minute: DateTime.now().minute,
                                 second: DateTime.now().second),
-                            onChange: widget.setTime,
+                            onChange: (time) {
+                              widget.setTime.call(time);
+                              setState(() {
+                                formatTime = time.format(context);
+                              });
+                            },
                           ),
                         );
                       },
@@ -152,7 +158,16 @@ class _SlideBottomSheetState extends State<SlideBottomSheet> {
                                             selectionMode:
                                                 DateRangePickerSelectionMode
                                                     .single,
-                                            onSelectionChanged: widget.setDate,
+                                            onSelectionChanged: (date) {
+                                              widget.setDate.call(date);
+                                              setState(
+                                                () {
+                                                  formatDate =
+                                                      DateFormat('dd MMMM yyyy')
+                                                          .format(date.value);
+                                                },
+                                              );
+                                            },
                                           ),
                                         ),
                                       ),
