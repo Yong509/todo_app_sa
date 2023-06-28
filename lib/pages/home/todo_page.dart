@@ -71,14 +71,10 @@ class _TodoPageState extends State<TodoPage> {
           ),
           SlideBottomSheet(
             setDate: (date) {
-              setState(() {
-                formatDate = DateFormat('dd MMMM yyyy').format(date.value);
-              });
+              formatDate = DateFormat('dd MMMM yyyy').format(date.value);
             },
             setTime: (time) {
-              setState(() {
-                formatTime = time.format(context);
-              });
+              formatTime = time.format(context);
             },
             onTextChange: (title) {
               taskTitle = title;
