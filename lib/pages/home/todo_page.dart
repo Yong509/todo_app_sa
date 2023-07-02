@@ -15,26 +15,6 @@ class _TodoPageState extends State<TodoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              child: ListView(
-                children: [],
-              ),
-            ),
-          ),
-          SlideBottomSheet(
-            setDate: (date) {},
-            setTime: (time) {},
-            onTextChange: (title) {},
-            onCreateTask: () {},
-          )
-        ],
-      ),
-    );
+    return Container();
   }
 }
